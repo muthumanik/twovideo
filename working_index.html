@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial;
+  color: white;
+}
+
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.left {
+  left: 0;
+  background-color: #111;
+}
+
+.right {
+  right: 0;
+  background-color: red;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.centered img {
+  width: 150px;
+  border-radius: 50%;
+}
+</style>
+</head>
+<body>
+
+<div class="split left">
+  <div class="centered">
+    <video id="first" width="320" height="320" pip="false" controls autoplay muted>
+	 <source src="primary-video.mp4" type="video/mp4">
+    </video>
+    <h2>Screen 1</h2>
+  </div>
+</div>
+
+<div class="split right">
+  <div class="centered">
+    <video id="second" width="320" height="320" pip="true" controls autoplay muted>
+	 <source src="secondary-video.mp4" type="video/mp4">
+	</video>
+    <h2>Screen 2</h2>
+  </div>
+</div>
+     
+</body>
+</html> 
