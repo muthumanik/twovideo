@@ -1,66 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  font-family: Arial;
-  color: white;
-}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial;
+            color: white;
+        }
 
-.split {
-  height: 100%;
-  width: 50%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
+        .split {
+            height: 100%;
+            width: 50%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
 
-.left {
-  left: 0;
-  background-color: #111;
-}
+        .left {
+            left: 0;
+            background-color: #111;
+        }
 
-.right {
-  right: 0;
-  background-color: red;
-}
+        .right {
+            right: 0;
+            background-color: red;
+        }
 
-.centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
 
-.centered img {
-  width: 150px;
-  border-radius: 50%;
-}
-</style>
+        .centered img {
+            width: 150px;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
 
 <div class="split left">
-  <div class="centered">
-    <video id="first" width="320" height="320" pip="false" controls autoplay muted loop>
-	 <source src="first.mp4" type="video/mp4">
-    </video>
-    <h2>Screen 1</h2>
-  </div>
+    <div class="centered">
+        <video id="first" width="320" height="320" controls autoplay muted loop></video>
+        <h2>Screen 1</h2>
+    </div>
 </div>
 
 <div class="split right">
-  <div class="centered">
-    <video id="second" width="320" height="320" pip="true" controls autoplay muted loop>
-	 <source src="second.mp4" type="video/mp4">
-	</video>
-    <h2>Screen 2</h2>
-  </div>
+    <div class="centered">
+        <video id="second" width="320" height="320" controls autoplay muted loop>
+            <source src="second.mp4" type="video/mp4">
+        </video>
+        <h2>Screen 2</h2>
+    </div>
 </div>
-     
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/3.1.0/shaka-player.ui.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/3.1.0/controls.css">
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Initialize Shaka Player
+        const videoElement = document.getElementById('first');
+        const shakaPlayer = new shaka.Player(videoElement);
+
+        // Attach player to window for debugging
+        window.shakaPlayer = shakaPlayer;
+
+        // Listen for error events
+        shakaPlayer.addEventListener('error', onErrorEvent);
+
+        // Load video
+        try {
+            await shakaPlayer.load('https://cpetestutility.stb.r53.xcal.tv/VideoTestStream/public/aamptest/streams/generated/main.mpd');
+            console.log('The video has now been loaded!');
+        } catch (e) {
+            onError(e);
+        }
+    });
+
+    // Error handling
+    function onErrorEvent(event) {
+        onError(event.detail);
+    }
+
+    function onError(error) {
+        console.error('Error code', error.code, 'object', error);
+    }
+</script>
+
 </body>
-</html> 
+</html>
+
